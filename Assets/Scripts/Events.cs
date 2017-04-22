@@ -36,5 +36,37 @@ public class ItemOutEvent : UnityEvent {
 
 }
 
+public class ItemCollisionEvent : UnityEvent {
+
+  public Item Type { get { return type; } }
+  private Item type;
+
+  public ItemCollisionEvent(Item type) {
+    this.type = type;
+  }
+
+}
+
+public class CollidersEvent : UnityEvent {
+
+  public GameObject Items { get { return items; } }
+  private GameObject items;
+
+  public CollidersEvent(GameObject items) {
+    this.items = items;
+  }
+  
+}
+
+public class ScoreEvent : UnityEvent {
+
+  public int Items { get { return items; } }
+  private int items;
+
+  public ScoreEvent(int items) {
+    this.items = items;
+  }
+
+}
 
 #endregion

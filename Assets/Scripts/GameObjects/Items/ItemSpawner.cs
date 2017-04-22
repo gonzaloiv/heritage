@@ -32,7 +32,7 @@ public class ItemSpawner : MonoBehaviour {
   private IEnumerator SpawningRoutine() {
     int i = 0;
     while (i < Config.MAX_ITEMS) {
-      yield return new WaitForSeconds(1);
+      yield return new WaitForSeconds(ModeConfig.Instance.SPAWING_TIME);
       SpawnRect();
     }
   }

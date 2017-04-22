@@ -5,6 +5,13 @@ using UnityEngine;
 public class Config {
   public const float TIME_SCALE = 1;
 	public const int MAX_ITEMS = 100;
+  public static Color[] MainColors = new Color[] { 
+    new Color(255, 236, 109), 
+    new Color(0, 232, 197), 
+    new Color(255, 180, 96), 
+    new Color(175, 96, 232), 
+    new Color(72, 139, 255)
+  };
 }
 
 public enum Layer {

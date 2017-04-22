@@ -14,17 +14,19 @@ public class WorldController : MonoBehaviour {
 
   void Awake() {
     worldModel = GetComponent<WorldModel>();
-    transform.localScale = new Vector2(ModeConfig.Instance.WORLD_SIZE, ModeConfig.Instance.WORLD_SIZE);
+    transform.localScale = new Vector2(ModeConfig.Instance.INITIAL_WORLD_SIZE, ModeConfig.Instance.INITIAL_WORLD_SIZE) * ModeConfig.Instance.WorldSizeScale;
   }
 
   void OnEnable() {
     EventManager.StartListening<ItemInEvent>(OnItemInEvent);
     EventManager.StartListening<ItemOutEvent>(OnItemOutEvent);
+    EventManager.StartListening<ScoreEvent>(OnScoreEvent);
   }
 
   void OnDisable() {
     EventManager.StopListening<ItemInEvent>(OnItemInEvent);
     EventManager.StopListening<ItemOutEvent>(OnItemOutEvent);
+    EventManager.StopListening<ScoreEvent>(OnScoreEvent);
   }
 
   #endregion
@@ -33,12 +35,22 @@ public class WorldController : MonoBehaviour {
 
   void OnItemInEvent(ItemInEvent itemInEvent) {
     worldModel.AddItem(itemInEvent.Item);
-    HUDController.UpdateScore(worldModel.Items.Count);
   }
 
   void OnItemOutEvent(ItemOutEvent itemOutEvent) {
     worldModel.RemoveItem(itemOutEvent.Item);
-    HUDController.UpdateScore(worldModel.Items.Count);
+  }
+
+  void OnScoreEvent(ScoreEvent scoreEvent) {
+    UpdateScale(ModeConfig.Instance.WorldSizeScale);
+  }
+
+  #endregion
+
+  #region Private Behaviour
+
+  private void UpdateScale(float scale) {
+    transform.localScale = Vector3.Lerp (transform.localScale, new Vector2(ModeConfig.Instance.INITIAL_WORLD_SIZE, ModeConfig.Instance.INITIAL_WORLD_SIZE) * scale, Time.deltaTime);
   }
 
   #endregion

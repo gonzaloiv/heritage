@@ -11,7 +11,8 @@ public class HUDController : Singleton<HUDController> {
   private const float UPDATE_TIME = 0.1f;
 
   private static Text scoreLabel;
-  private static int score;
+  private Animator anim;
+  private static int currentScore;
   private static int maxScore;
 
   #endregion
@@ -20,31 +21,33 @@ public class HUDController : Singleton<HUDController> {
 
   void Awake() {
     scoreLabel = GetComponentInChildren<Text>();
+    anim = GetComponent<Animator>();
   }
 
-  void OnEnable() {
-    StartCoroutine(ScoreUpdatingRoutine());
+  void Start() {
+    maxScore = DataManager.GetHighestScore();
   }
 
   #endregion
 
   #region Public Behaviour
 
-  public static void UpdateScore(int itemScore) {
-    score = itemScore;
-    if(score > maxScore)
-      maxScore = score;
+  public static void UpdateScore(int score) {
+    currentScore = score;
+    scoreLabel.text = currentScore + "/" + maxScore;
+    if (score > maxScore)
+      Instance.SetHighestScore(currentScore);
   }
 
   #endregion
 
   #region Private Behaviour
 
-  private IEnumerator ScoreUpdatingRoutine() {
-    while(gameObject.activeSelf) {
-      yield return new WaitForSeconds(UPDATE_TIME);
-      scoreLabel.text = score + "/" + maxScore;
-    }
+  private void SetHighestScore(int score) {
+    maxScore = score;
+
+    DataManager.SetHighestScore(score);
+    anim.Play("HighestScore");
   }
 
   #endregion

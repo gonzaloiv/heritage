@@ -12,16 +12,32 @@ public class WorldModel : MonoBehaviour {
 
   #endregion
 
+  #region Mono Behaviour
+
+
+  void Update() {
+    HUDController.UpdateScore(items.Count);
+    items.Clear();
+  }
+
+  void FixedUpdate() {
+    items.Clear();
+  }
+
+  #endregion
+
   #region Public Behaviour
 
   public void AddItem(GameObject item) {
-    if(items.Where(x => x == item).Count() == 0)
+    if (!items.Contains(item)) {
       items.Add(item);
+      EventManager.TriggerEvent(new ScoreEvent(items.Count));
+    }
   }
 
   public void RemoveItem(GameObject item) {
-    if(items.Where(x => x == item).Count() != 0)
-      items.Remove(item);
+    bool result = items.Remove(item);
+    EventManager.TriggerEvent(new ScoreEvent(items.Count));
   }
 
   #endregion

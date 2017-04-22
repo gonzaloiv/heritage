@@ -6,7 +6,6 @@ public class ItemGravityBehaviour : MonoBehaviour {
 
   #region Field
 
-  [SerializeField] private const float PULL_FORCE = 3000;
   [SerializeField] private const float DECELERATION = 0.9f;
   [SerializeField] private GameObject world;
 
@@ -19,20 +18,24 @@ public class ItemGravityBehaviour : MonoBehaviour {
 
   void Awake() {
     rb = GetComponent<Rigidbody2D>(); 
+    rb.gravityScale = ModeConfig.Instance.INITIAL_GRAVITY_SCALE;
   }
 
   void OnEnable() {
-    rb.gravityScale = ModeConfig.Instance.ITEM_GRAVITY_SCALE;
+    EventManager.StartListening<ScoreEvent>(OnScoreEvent);
+  }
+
+  void OnDisable() {
+    EventManager.StopListening<ScoreEvent>(OnScoreEvent);
   }
 
   void Update() {
+    Vector2 direction = (Vector2) world.transform.position - (Vector2) transform.position;
     if (!inContact) { 
-      Vector2 direction = world.transform.position - transform.position;
-      if (direction.magnitude < Vector2.one.magnitude * ModeConfig.Instance.GRAVITY_MIN_DISTANCE) {
-        rb.AddForce(direction.normalized * PULL_FORCE * Time.deltaTime);
-        rb.velocity = rb.velocity * DECELERATION;
-      }
-    }
+      if (direction.magnitude < Vector2.one.magnitude * ModeConfig.Instance.GravityMinDistance)
+        rb.AddForce(direction.normalized * ModeConfig.Instance.PULL_FORCE * Time.deltaTime);
+    } 
+    rb.velocity = rb.velocity * DECELERATION;
   }
 
   void OnCollisionEnter2D(Collision2D collision2D) {
@@ -43,8 +46,18 @@ public class ItemGravityBehaviour : MonoBehaviour {
   }
   
   void OnCollisionExit2D(Collision2D collision2D) {
-    if(collision2D.gameObject.layer == world.layer)
+    if (collision2D.gameObject.layer == world.layer) {
       inContact = false;
+      rb.gravityScale = ModeConfig.Instance.GravityScale;
+    }
+  }
+
+  #endregion
+
+  #region Event Behaviour
+
+  void OnScoreEvent(ScoreEvent scoreEvent) {
+    rb.gravityScale = ModeConfig.Instance.GravityScale;
   }
 
   #endregion

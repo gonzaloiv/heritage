@@ -6,7 +6,7 @@ public class WorldCollisionBehaviour : MonoBehaviour {
 
   #region Fields
 
-  private const float EXIT_DISTANCE = 3f;
+  private const float EXIT_DISTANCE = 4f;
   private WorldModel worldModel;
 
   #endregion
@@ -22,9 +22,9 @@ public class WorldCollisionBehaviour : MonoBehaviour {
       EventManager.TriggerEvent(new ItemInEvent(collision2D.gameObject));
   }
 
-  void OnCollisionExit2D(Collision2D collision2D) {
+  void OnCollisionStay2D(Collision2D collision2D) {
     if(collision2D.gameObject.layer == (int) Layer.Item)
-      StartCoroutine(ExitRoutine(collision2D.gameObject));
+      EventManager.TriggerEvent(new ItemInEvent(collision2D.gameObject));
   }
 
 	#endregion
@@ -32,7 +32,7 @@ public class WorldCollisionBehaviour : MonoBehaviour {
   #region Private Behaviour
 
   private IEnumerator ExitRoutine(GameObject item) {
-    yield return new WaitForSeconds(0.2f);
+    yield return new WaitForSeconds(0.3f);
     float distance = (item.transform.position - transform.position).magnitude;
     if(distance > EXIT_DISTANCE)
       EventManager.TriggerEvent(new ItemOutEvent(item));
