@@ -14,6 +14,7 @@ public class WorldController : MonoBehaviour {
 
   void Awake() {
     worldModel = GetComponent<WorldModel>();
+    transform.localScale = new Vector2(ModeConfig.Instance.WORLD_SIZE, ModeConfig.Instance.WORLD_SIZE);
   }
 
   void OnEnable() {

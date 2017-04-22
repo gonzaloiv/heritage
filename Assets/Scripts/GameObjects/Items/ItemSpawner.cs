@@ -40,7 +40,7 @@ public class ItemSpawner : MonoBehaviour {
   private void SpawnRect() {
     GameObject rect = rectPool.PopObject();
     rect.transform.position = RandomRectPosition();
-    rect.GetComponent<GravityBehaviour>().Initialize(world);
+    rect.GetComponent<ItemGravityBehaviour>().Initialize(world);
     rect.SetActive(true);
   }
 

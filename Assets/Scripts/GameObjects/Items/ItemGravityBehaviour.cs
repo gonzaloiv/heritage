@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityBehaviour : MonoBehaviour {
+public class ItemGravityBehaviour : MonoBehaviour {
 
   #region Field
 
-  [SerializeField] private const float MIN_DISTANCE = 2.2f;
-  [SerializeField] private const float PULL_FORCE = 10000;
+  [SerializeField] private const float PULL_FORCE = 3000;
   [SerializeField] private const float DECELERATION = 0.9f;
   [SerializeField] private GameObject world;
 
@@ -22,10 +21,14 @@ public class GravityBehaviour : MonoBehaviour {
     rb = GetComponent<Rigidbody2D>(); 
   }
 
+  void OnEnable() {
+    rb.gravityScale = ModeConfig.Instance.ITEM_GRAVITY_SCALE;
+  }
+
   void Update() {
     if (!inContact) { 
       Vector2 direction = world.transform.position - transform.position;
-      if (direction.magnitude < Vector2.one.magnitude * MIN_DISTANCE) {
+      if (direction.magnitude < Vector2.one.magnitude * ModeConfig.Instance.GRAVITY_MIN_DISTANCE) {
         rb.AddForce(direction.normalized * PULL_FORCE * Time.deltaTime);
         rb.velocity = rb.velocity * DECELERATION;
       }
@@ -33,8 +36,10 @@ public class GravityBehaviour : MonoBehaviour {
   }
 
   void OnCollisionEnter2D(Collision2D collision2D) {
-    if(collision2D.gameObject.layer == world.layer)
+    if (collision2D.gameObject.layer == world.layer) {
       inContact = true;
+      rb.gravityScale = 0;
+    }
   }
   
   void OnCollisionExit2D(Collision2D collision2D) {

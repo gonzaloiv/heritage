@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DraggableBehaviour : MonoBehaviour {
+public class WorldDraggableBehaviour : MonoBehaviour {
 
   #region Fields
 
