@@ -7,6 +7,7 @@ public class Config {
 }
 
 public enum Layer {
+  World = 8
 }
 
 public enum Scene {

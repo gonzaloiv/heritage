@@ -8,6 +8,7 @@ public class GameObjectPool : IPool {
   #region Fields
 
   public int ActiveObjects { get { return objects.Where(x => x.activeSelf).Count(); } } 
+  public int Count { get { return objects.Count(); } } 
 
   private GameObject prefab;
   private List<GameObject> objects = new List<GameObject>();
