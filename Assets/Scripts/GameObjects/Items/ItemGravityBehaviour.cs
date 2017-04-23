@@ -21,6 +21,10 @@ public class ItemGravityBehaviour : MonoBehaviour {
     rb.gravityScale = ModeConfig.Instance.INITIAL_GRAVITY_SCALE;
   }
 
+  void FixedUpdate() {
+    rb.gravityScale = ModeConfig.Instance.GravityScale;
+  }
+
   void OnEnable() {
     EventManager.StartListening<ScoreEvent>(OnScoreEvent);
   }
@@ -31,25 +35,19 @@ public class ItemGravityBehaviour : MonoBehaviour {
 
   void Update() {
     Vector2 direction = (Vector2) world.transform.position - (Vector2) transform.position;
-    if (!inContact) { 
-      if (direction.magnitude < Vector2.one.magnitude * ModeConfig.Instance.GravityMinDistance)
-        rb.AddForce(direction.normalized * ModeConfig.Instance.PULL_FORCE * Time.deltaTime);
-    } 
+    if (direction.magnitude < Vector2.one.magnitude * ModeConfig.Instance.GravityMinDistance)
+      rb.AddForce(direction.normalized * ModeConfig.Instance.PULL_FORCE * Time.deltaTime);
     rb.velocity = rb.velocity * DECELERATION;
   }
 
   void OnCollisionEnter2D(Collision2D collision2D) {
-    if (collision2D.gameObject.layer == world.layer) {
+    if (collision2D.gameObject.layer == world.layer)
       inContact = true;
-      rb.gravityScale = 0;
-    }
   }
   
   void OnCollisionExit2D(Collision2D collision2D) {
-    if (collision2D.gameObject.layer == world.layer) {
+    if (collision2D.gameObject.layer == world.layer)
       inContact = false;
-      rb.gravityScale = ModeConfig.Instance.GravityScale;
-    }
   }
 
   #endregion

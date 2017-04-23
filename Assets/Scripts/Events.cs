@@ -25,16 +25,6 @@ public class ItemInEvent : UnityEvent {
   }
 
 }
-public class ItemOutEvent : UnityEvent {
-
-  public GameObject Item { get { return item; } }
-  private GameObject item;
-
-  public ItemOutEvent(GameObject item) {
-    this.item = item;
-  }
-
-}
 
 public class ItemCollisionEvent : UnityEvent {
 
@@ -45,17 +35,6 @@ public class ItemCollisionEvent : UnityEvent {
     this.type = type;
   }
 
-}
-
-public class CollidersEvent : UnityEvent {
-
-  public GameObject Items { get { return items; } }
-  private GameObject items;
-
-  public CollidersEvent(GameObject items) {
-    this.items = items;
-  }
-  
 }
 
 public class ScoreEvent : UnityEvent {

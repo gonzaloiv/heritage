@@ -19,13 +19,11 @@ public class WorldController : MonoBehaviour {
 
   void OnEnable() {
     EventManager.StartListening<ItemInEvent>(OnItemInEvent);
-    EventManager.StartListening<ItemOutEvent>(OnItemOutEvent);
     EventManager.StartListening<ScoreEvent>(OnScoreEvent);
   }
 
   void OnDisable() {
     EventManager.StopListening<ItemInEvent>(OnItemInEvent);
-    EventManager.StopListening<ItemOutEvent>(OnItemOutEvent);
     EventManager.StopListening<ScoreEvent>(OnScoreEvent);
   }
 
@@ -35,10 +33,6 @@ public class WorldController : MonoBehaviour {
 
   void OnItemInEvent(ItemInEvent itemInEvent) {
     worldModel.AddItem(itemInEvent.Item);
-  }
-
-  void OnItemOutEvent(ItemOutEvent itemOutEvent) {
-    worldModel.RemoveItem(itemOutEvent.Item);
   }
 
   void OnScoreEvent(ScoreEvent scoreEvent) {

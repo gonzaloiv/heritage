@@ -29,15 +29,4 @@ public class WorldCollisionBehaviour : MonoBehaviour {
 
 	#endregion
 
-  #region Private Behaviour
-
-  private IEnumerator ExitRoutine(GameObject item) {
-    yield return new WaitForSeconds(0.3f);
-    float distance = (item.transform.position - transform.position).magnitude;
-    if(distance > EXIT_DISTANCE)
-      EventManager.TriggerEvent(new ItemOutEvent(item));
-  }
-
-  #endregion
-
 }

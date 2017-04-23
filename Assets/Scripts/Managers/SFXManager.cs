@@ -7,10 +7,8 @@ public class SFXManager : MonoBehaviour {
 
 	#region Fields
 
-  // Menus
-  [SerializeField] private AudioClip gameStarted;
-
-  // Game Mechanics
+  [SerializeField] private AudioClip gameStartedSound;
+  [SerializeField] private AudioClip[] itemCollisionSounds;
 
   private AudioSource audioSource;
 
@@ -23,15 +21,22 @@ public class SFXManager : MonoBehaviour {
   }
 
   void OnEnable () {
-    audioSource.PlayOneShot(gameStarted);
+    audioSource.PlayOneShot(gameStartedSound);
+    EventManager.StartListening<ItemCollisionEvent>(OnItemCollisionEvent);
   }
 
   void OnDisable () {
+    EventManager.StopListening<ItemCollisionEvent>(OnItemCollisionEvent);
   }
 
   #endregion
 
   #region Event Behaviour
+
+  void OnItemCollisionEvent(ItemCollisionEvent ItemCollisionEvent) {
+    audioSource.PlayOneShot(itemCollisionSounds[Random.Range(0, itemCollisionSounds.Length)]);
+  }
+
   #endregion
 
 }

@@ -10,7 +10,7 @@ public class ItemSpawner : MonoBehaviour {
   [SerializeField] private GameObject[] itemPrefabs;
 
   private Vector2 screenSize;
-  private GameObjectArrayPool rectPool;
+  private GameObjectArrayPool itemPool;
 
   #endregion
 
@@ -18,7 +18,7 @@ public class ItemSpawner : MonoBehaviour {
 
   void Awake() {
     screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-		rectPool = new GameObjectArrayPool("ItemPool", itemPrefabs, 5, transform);
+		itemPool = new GameObjectArrayPool("ItemPool", itemPrefabs, 5, transform);
   }
 
   void Start() {
@@ -33,18 +33,19 @@ public class ItemSpawner : MonoBehaviour {
     int i = 0;
     while (i < Config.MAX_ITEMS) {
       yield return new WaitForSeconds(ModeConfig.Instance.SPAWING_TIME);
-      SpawnRect();
+      SpawnItem();
     }
   }
 
-  private void SpawnRect() {
-    GameObject rect = rectPool.PopObject();
-    rect.transform.position = RandomRectPosition();
+  private void SpawnItem() {
+    GameObject rect = itemPool.PopObject();
+    rect.transform.position = RandomItemPosition();
+    rect.GetComponent<ItemCollisionBehaviour>().Initialize(this);
     rect.GetComponent<ItemGravityBehaviour>().Initialize(world);
     rect.SetActive(true);
   }
 
-  private Vector2 RandomRectPosition() {
+  private Vector2 RandomItemPosition() {
     return new Vector2(Random.Range(-screenSize.x, screenSize.x), screenSize.y);
   }
 
