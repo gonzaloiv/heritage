@@ -8,14 +8,13 @@ using System;
 [Serializable]
 public class Leaderboard {
 
-  public bool IsTutorialPlayer { get { return isTutorialPlayer; } set { isTutorialPlayer = value; } }
-  private bool isTutorialPlayer = false;
+  public bool[] IsTutorialPlayed { get { return isTutorialPlayed; } set { isTutorialPlayed = value; } }
+  private bool[] isTutorialPlayed = new bool[] { false, false };
 
-  public int HighestScore { get { return highestScore; } set { highestScore = value; } }
-  private int highestScore = 0;
+  public int[] HighestScores { get { return highestScores; } set { highestScores = value; } }
+  private int[] highestScores = new int[] { 0, 0 };
 
 }
-
 
 public class DataManager : MonoBehaviour {
 
@@ -32,7 +31,6 @@ public class DataManager : MonoBehaviour {
 
   void Awake() {
     dataPath = Application.persistentDataPath;
-    Debug.Log("Data: " + Application.persistentDataPath);
     leaderboard = new Leaderboard();
     LoadData();
   }
@@ -51,34 +49,31 @@ public class DataManager : MonoBehaviour {
   #region Public Behaviour
 
   public static void SetIsTutorialPlayed() {
-    leaderboard.IsTutorialPlayer = true;
+    leaderboard.IsTutorialPlayed[(int)ModeConfig.Instance.MODE] = true;
   }
 
   public static bool GetIsTutorialPlayed() {
-    return leaderboard.IsTutorialPlayer;
+    return leaderboard.IsTutorialPlayed[(int)ModeConfig.Instance.MODE];
   }
 
   public static void SetHighestScore(int newScore) {
-    leaderboard.HighestScore = newScore;
+    Debug.Log("HIGHEST: " + leaderboard.HighestScores[(int)ModeConfig.Instance.MODE]);
+    leaderboard.HighestScores[(int)ModeConfig.Instance.MODE] = newScore;
   }
 
   public static int GetHighestScore() {
-    return leaderboard.HighestScore;
+    Debug.Log("HIGHEST: " + leaderboard.HighestScores[(int)ModeConfig.Instance.MODE]);
+    return leaderboard.HighestScores[(int)ModeConfig.Instance.MODE];
   }
 
-  #endregion
-
-  #region Private Behaviour
-
-
-  private static void SaveData() {
+  public static void SaveData() {
     BinaryFormatter formatter = new BinaryFormatter();
     FileStream saveFile = File.Create(dataPath + "/data.binary");
     formatter.Serialize(saveFile, leaderboard);
     saveFile.Close();
   }
 
-  private static void LoadData() {
+  public static void LoadData() {
     try {
       BinaryFormatter formatter = new BinaryFormatter();
       FileStream saveFile = File.Open(dataPath + "/data.binary", FileMode.Open);

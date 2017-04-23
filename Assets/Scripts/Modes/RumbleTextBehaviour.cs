@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class TitleController : MonoBehaviour {
+public class RumbleTextBehaviour : MonoBehaviour {
 
   #region Fields
 
-  private float SHAKE_AMOUNT = 0.4f;
+  [SerializeField] private float SHAKE_AMOUNT = 0.6f;
   private Text[] titles;
     
   #endregion
@@ -16,7 +16,7 @@ public class TitleController : MonoBehaviour {
   #region Mono Behaviour
 
   void Awake() {
-    titles = GetComponentsInChildren<Text>();
+    titles = GetComponentsInChildren<Text>(true);
   }
 
   void Update() {

@@ -6,6 +6,7 @@ public class ModeConfig : Singleton<ModeConfig> {
 
   #region Fields
 
+  public Mode MODE;
   public float INITIAL_WORLD_SIZE;
   public float INITIAL_GRAVITY_SCALE;
   public float INITIAL_GRAVITY_MIN_DISTANCE;
@@ -25,10 +26,12 @@ public class ModeConfig : Singleton<ModeConfig> {
   }
 
   void OnEnable() {
+    DataManager.LoadData();
     EventManager.StartListening<ScoreEvent>(OnScoreEvent);
   }
 
   void OnDisable() {
+    DataManager.SaveData();
     EventManager.StopListening<ScoreEvent>(OnScoreEvent);  
   }
 
@@ -37,7 +40,7 @@ public class ModeConfig : Singleton<ModeConfig> {
   #region Event Behaviour
 
   void OnScoreEvent(ScoreEvent scoreEvent) {
-    WorldSizeScale = Instance.INITIAL_WORLD_SIZE + scoreEvent.Items / 5f * 0.2f;
+    WorldSizeScale = Instance.INITIAL_WORLD_SIZE + scoreEvent.Items / 5f * 0.3f;
     GravityMinDistance = Instance.INITIAL_GRAVITY_MIN_DISTANCE - scoreEvent.Items / 5f * 0.1f;
     GravityScale = Instance.INITIAL_GRAVITY_SCALE + scoreEvent.Items / 5f * 0.1f;
   }

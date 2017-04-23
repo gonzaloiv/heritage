@@ -26,6 +26,7 @@ public class HUDController : Singleton<HUDController> {
 
   void Start() {
     maxScore = DataManager.GetHighestScore();
+    scoreLabel.text = currentScore + "/" + maxScore;
   }
 
   #endregion
@@ -34,9 +35,9 @@ public class HUDController : Singleton<HUDController> {
 
   public static void UpdateScore(int score) {
     currentScore = score;
-    scoreLabel.text = currentScore + "/" + maxScore;
     if (score > maxScore)
       Instance.SetHighestScore(currentScore);
+    scoreLabel.text = currentScore + "/" + maxScore;
   }
 
   #endregion
@@ -45,7 +46,6 @@ public class HUDController : Singleton<HUDController> {
 
   private void SetHighestScore(int score) {
     maxScore = score;
-
     DataManager.SetHighestScore(score);
     anim.Play("HighestScore");
   }

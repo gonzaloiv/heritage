@@ -18,22 +18,16 @@ public class WorldController : MonoBehaviour {
   }
 
   void OnEnable() {
-    EventManager.StartListening<ItemInEvent>(OnItemInEvent);
     EventManager.StartListening<ScoreEvent>(OnScoreEvent);
   }
 
   void OnDisable() {
-    EventManager.StopListening<ItemInEvent>(OnItemInEvent);
     EventManager.StopListening<ScoreEvent>(OnScoreEvent);
   }
 
   #endregion
 
   #region Event Behaviour
-
-  void OnItemInEvent(ItemInEvent itemInEvent) {
-    worldModel.AddItem(itemInEvent.Item);
-  }
 
   void OnScoreEvent(ScoreEvent scoreEvent) {
     UpdateScale(ModeConfig.Instance.WorldSizeScale);

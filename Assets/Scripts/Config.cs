@@ -30,3 +30,8 @@ public enum Item {
   Item04,
   Item05
 }
+
+public enum Mode {
+  Collect,
+  Destroy
+}
