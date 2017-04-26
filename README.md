@@ -1,4 +1,4 @@
-![alt cover image](https://drive.google.com/uc?id=0B4Ai2actge7mNXhNYlhTcHlVTzQ)
+![alt cover image](https://drive.google.com/uc?id=0B4Ai2actge7mTk5zVzF2dlVha0k)
 
 ## About
 
