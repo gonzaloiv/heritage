@@ -1,14 +1,10 @@
-     _____         _ _
-    |  |  |___ ___|_| |_ ___ ___ ___
-    |     | -_|  _| |  _| .'| . | -_|
-    |__|__|___|_| |_|_| |__,|_  |___|
-                            |___|
+![alt cover image](https://drive.google.com/uc?id=0B4Ai2actge7mNXhNYlhTcHlVTzQ)
 
 ## About
 
 Little project for the 28th edition of Ludum Dare based on the topic proposed: *A small world*.
 
-Developed in Unity, using the library [2D Light of Sight] (https://github.com/f15gdsy/2D-Light-of-Sight-Unity). It contains vectors from [Freepik] (http://www.freepik.es/) and the font Gwibble from [DaFont] (http://www.dafont.com/es/gwibble.font). I've used illustrator for the graphics, Ableton Live for the music and Bfxr for the SFXs.
+Developed in Unity, using the library [2D Light of Sight](https://github.com/f15gdsy/2D-Light-of-Sight-Unity). It contains vectors from [Freepik](http://www.freepik.es/) and the font Gwibble from [DaFont](http://www.dafont.com/es/gwibble.font). I've used Adobe Illustrator for the graphics, Ableton Live for the music and Bfxr for the SFXs.
 
 ## Instructions
 

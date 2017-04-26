@@ -23,6 +23,7 @@ public class InfoScreenController : MonoBehaviour {
 
   private IEnumerator InfoRoutine() {
     Time.timeScale = 0;
+    yield return TimeManager.WaitForRealTime(0.1f);
     infoScreens[(int) ModeConfig.Instance.MODE].gameObject.SetActive(true);
     yield return TimeManager.WaitForRealTime(2);
     infoScreens[(int) ModeConfig.Instance.MODE].gameObject.SetActive(false);

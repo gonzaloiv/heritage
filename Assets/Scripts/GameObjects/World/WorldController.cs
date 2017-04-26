@@ -17,6 +17,10 @@ public class WorldController : MonoBehaviour {
     transform.localScale = new Vector2(ModeConfig.Instance.INITIAL_WORLD_SIZE, ModeConfig.Instance.INITIAL_WORLD_SIZE) * ModeConfig.Instance.WorldSizeScale;
   }
 
+  void Start() {
+    transform.localScale = new Vector2(ModeConfig.Instance.INITIAL_WORLD_SIZE, ModeConfig.Instance.INITIAL_WORLD_SIZE) * ModeConfig.Instance.WorldSizeScale;
+  }
+
   void OnEnable() {
     EventManager.StartListening<ScoreEvent>(OnScoreEvent);
   }
